@@ -1,11 +1,5 @@
 # how to download stock data for free in 2019
 
-import pandas as pd
-import pandas_datareader.data as web
-import datetime as dt
-from datetime import datetime
-import os
-
 def get_stock_data():
     tickers = ['TSLA', 'MCD', 'AAPL', 'GOOGL', 'XOM' ]
     #tickers = ['MCD', 'AAPL', 'GOOGL', 'XOM' ] # capitalize tickers
@@ -27,4 +21,4 @@ def get_stock_data():
         except Exception as e:
             print( e, 'error' )
 
-get_stock_data()
+
