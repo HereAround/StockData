@@ -56,6 +56,7 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
     
     if display:
         print( 'Investor ends' )
+        
         print( '\n' )
         print( 'Original investment: ' + str( amount ) )
         print( 'Length of rolling average: ' + str( roll_length ) + ' days' )
@@ -66,6 +67,36 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
         print( 'Money: ', str( money ) )
         print( 'Total value: ', str( data['Open'][ length - 1 ] * shares + money ) )
         print( 'Increase of value: ' + str( 100 * ( data['Open'][ length - 1 ] * shares + money ) / amount ) + '%' )
+        print( '\n' )
+        print( 'Final difference: ' + str( data['Difference'][ length - 1 ] ) )
+        if data['Difference'][ length - 1 ] > 0:
+            print( 'Tendency: Value increases -> Hold/Buy' )
+        if data['Difference'][ length - 1 ] <= 0:
+            print( 'Tendency: Value decreases -> Sell' )
     
     # return total value
     return data['Open'][ length - 1 ] * shares + money
+
+
+# (3) Optimize rolling length
+def optimize_rolling_length( data, amount, fee ):
+    
+    print( '\n' )
+    print( 'Perform investment for different rolling lengths...' )
+    
+    rolls = [ x * 10 for x in range(1, 40)]
+    returns = []
+    max_value = [ 0, 0 ]
+    for roll in rolls:
+        value = trade_rolling_average( data, roll, amount, fee, False )
+        if value > max_value[ 0 ]:
+            max_value = [ value, roll ]
+
+    print( 'Finished investings...' )
+    print( 'Amount: ' + str( amount ) )
+    print( 'Fee per order: ' + str( fee ) )
+    print( 'Choices of rolling lengths: ', str( rolls ) )
+    print( 'Best rolling length: ', str( max_value[ 1 ] ) )
+    print( 'Retrun for best rolling length: ', str( max_value[ 0 ] ) )
+    
+    return max_value

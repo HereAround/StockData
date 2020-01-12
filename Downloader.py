@@ -32,9 +32,6 @@ def save_stock_data( source, tickers, start, end ):
 # (2) Get stock_data
 def get_stock_data( source, ticker, start, end ):
     
-    if not os.path.exists('stockdata'):
-        os.makedirs('stockdata')
-    
     print (ticker)
     try:
         df = web.DataReader(ticker, source, start, end )
