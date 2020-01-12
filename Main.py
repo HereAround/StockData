@@ -13,8 +13,8 @@ from Trader import trade_rolling_average, optimize_rolling_length
 # (2) Pick title
 source = 'yahoo'
 #ticker = 'GOOGL'
-ticker = '^DJI'
-#ticker = '005930.KS' # Samsung
+#ticker = '^DJI'
+#ticker = '005930.KS' # Samsung?
 
 
 # (3) Pick start and end date
@@ -31,9 +31,5 @@ fee = 5
 data = get_stock_data( source, ticker, start, end )
 
 
-# (6) Perform a single trade with rolling lenth of 250
-money = trade_rolling_average( data, 250, amount, fee, True )
-
-
-# (7) Repeat this strategy for different lengths of rolling averages
-optimize_rolling_length( data, amount, fee )
+# (6) Find ideal rolling length
+max_value = optimize_rolling_length( data, amount, fee )

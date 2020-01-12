@@ -81,7 +81,6 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
 # (3) Optimize rolling length
 def optimize_rolling_length( data, amount, fee ):
     
-    print( '\n' )
     print( 'Perform investment for different rolling lengths...' )
     
     rolls = [ x * 10 for x in range(1, 40)]
@@ -97,6 +96,11 @@ def optimize_rolling_length( data, amount, fee ):
     print( 'Fee per order: ' + str( fee ) )
     print( 'Choices of rolling lengths: ', str( rolls ) )
     print( 'Best rolling length: ', str( max_value[ 1 ] ) )
-    print( 'Retrun for best rolling length: ', str( max_value[ 0 ] ) )
-    
+    print( 'Return for best rolling length: ', str( max_value[ 0 ] ) )
+    print( '\n' )
+
+    # Display more details on this ideal strategy
+    trade_rolling_average( data, max_value[ 1 ], amount, fee, True )
+
+    # and return data summary
     return max_value
