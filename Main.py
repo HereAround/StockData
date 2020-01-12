@@ -1,24 +1,22 @@
-#!/usr/bin/env python3.7
+#!/usr/bin/env python3
 
-
-# (1) Load all necessary libraries
-import pandas as pd
-import pandas_datareader.data as web
+# (0) Load libraries
 import datetime as dt
 from datetime import datetime
-import os
-import matplotlib.pyplot as plt
-from matplotlib import style
-import math
-import numpy as np
-from scipy.stats.stats import pearsonr 
-#style.use('ggplot')
 
 
-# (2) Load our functions
-#import Downloader.py
-#import trader_001.py
+# (1) Load functionality
+from Downloader import save_stock_data, get_stock_data
+#import trader_001
 
 
-# (3) Execute our functions
-#get_stock_data()
+# (2) Set our desired variables/parameters
+source = 'yahoo'
+tickers = ['TSLA', 'MCD', 'AAPL', 'GOOGL', 'XOM' ]
+start = dt.datetime(2000,3,5)
+end = dt.datetime.today()
+
+
+# (3) Execute functions
+save_stock_data( source, tickers, start, end )
+df = get_stock_data( source, tickers, start, end )
