@@ -1,9 +1,15 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jan 11 21:50:25 2020
-
-@author: Patrick
-"""
+# (1) Load necessary libraries
+import pandas as pd
+import pandas_datareader.data as web
+import datetime as dt
+from datetime import datetime
+import os
+import matplotlib.pyplot as plt
+from matplotlib import style
+import math
+import numpy as np
+from scipy.stats.stats import pearsonr 
+style.use('ggplot')
 
 """
 ----------------
