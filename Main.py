@@ -12,10 +12,11 @@ from Trader import trade_rolling_average, optimize_rolling_length
 
 # (2) Pick title
 source = 'yahoo'
-#ticker = 'GOOGL'
+ticker = 'GOOGL'
+ticker = 'AMZN'
 #ticker = '^DJI'
 #ticker = '005930.KS' # Samsung?
-
+# Next: Automatically find the ticker for a given WKN or ISDN
 
 # (3) Pick start and end date
 start = dt.datetime(1980,3,5)

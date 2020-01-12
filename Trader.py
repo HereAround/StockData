@@ -73,6 +73,14 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
             print( 'Tendency: Value increases -> Hold/Buy' )
         if data['Difference'][ length - 1 ] <= 0:
             print( 'Tendency: Value decreases -> Sell' )
+        data['Pos'] = range(1, len(data) + 1)
+        data.plot(x='Pos', y=['Open', 'Difference', 'Rolling-Mean' ], kind="line")
+        plt.legend()
+        plt.title("Opening prices, rolling average and difference")
+        plt.ylabel('Value', fontsize = 14)
+        plt.xlabel('Trading days', fontsize = 14)
+        plt.grid(which = "major", color = 'k', linestyle = '-.', linewidth = 0.5 )
+        plt.show()
     
     # return total value
     return data['Open'][ length - 1 ] * shares + money

@@ -41,7 +41,7 @@ def get_stock_data( source, ticker, start, end ):
         print( e, 'error' )
     
     # use date as index in this dataframe
-    df.reset_index(inplace=True) 
+    df.reset_index(inplace=True)
     df.set_index("Date", inplace=True)
     
     # now return the data
