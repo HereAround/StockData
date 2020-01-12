@@ -1,24 +1,52 @@
-# how to download stock data for free in 2019
+# (1) Load necessary libraries
+import pandas as pd
+import pandas_datareader.data as web
+import datetime as dt
+from datetime import datetime
+import os
+import matplotlib.pyplot as plt
+from matplotlib import style
+import math
+import numpy as np
+from scipy.stats.stats import pearsonr 
+style.use('ggplot')
 
-def get_stock_data():
-    tickers = ['TSLA', 'MCD', 'AAPL', 'GOOGL', 'XOM' ]
-    #tickers = ['MCD', 'AAPL', 'GOOGL', 'XOM' ] # capitalize tickers
-    
-    start = dt.datetime(2015,3,5) # can import 5 years max with iex
-    end = dt.datetime.today()
+
+# (2) Get stock_data
+def save_stock_data( source, tickers, start, end ):
     
     if not os.path.exists('stockdata'):
         os.makedirs('stockdata')
-        
+    
     for ticker in tickers:
         print (ticker)
         try:
-            df = web.DataReader(ticker, 'yahoo', start, end )
-            print(df.head())
+            df = web.DataReader(ticker, source, start, end )
             df.to_csv('stockdata/'+ticker+'.csv')
-            print(ticker,'downloaded')
+            print(ticker,'downloaded and saved')
             print('\n')
         except Exception as e:
             print( e, 'error' )
 
 
+# (2) Get stock_data
+def get_stock_data( source, tickers, start, end ):
+    
+    if not os.path.exists('stockdata'):
+        os.makedirs('stockdata')
+    
+    for ticker in tickers:
+        print (ticker)
+        try:
+            df = web.DataReader(ticker, source, start, end )
+            print(ticker,'downloaded')
+            print('\n')
+        except Exception as e:
+            print( e, 'error' )
+    
+    # slightly adjust data
+    df.reset_index(inplace=True) 
+    df.set_index("Date", inplace=True)
+    
+    # and return
+    return df
