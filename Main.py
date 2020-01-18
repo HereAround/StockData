@@ -14,8 +14,16 @@ from Trader import trade_rolling_average, optimize_rolling_length
 source = 'yahoo'
 ticker = 'GOOGL'
 ticker = 'AMZN'
-#ticker = '^DJI'
-#ticker = '005930.KS' # Samsung?
+ticker = 'MSFT'
+ticker = 'AAPL'
+ticker = 'SAP'
+ticker = '^DJI'
+ticker = 'CON.DE'
+ticker = 'TTR1.DE'
+ticker = 'DRI.DE'
+ticker = 'ZO1.DE'
+ticker = '005930.KS' # Samsung?
+ticker = 'LEO'
 # Next: Automatically find the ticker for a given WKN or ISDN
 
 # (3) Pick start and end date
