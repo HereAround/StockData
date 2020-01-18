@@ -7,7 +7,6 @@ from datetime import datetime
 
 # (1) Load functionality
 from Downloader import save_stock_data, get_stock_data
-from Downloader import get_and_prepare_stock_data
 from Trader import trade_rolling_average, optimize_rolling_length
 
 
@@ -19,10 +18,11 @@ end = dt.datetime.today()
 
 
 # (3) Obtain stock data
-data = get_and_prepare_stock_data( source, tickers, start, end )
-
+data = get_stock_data( source, tickers, start, end )
+test_data = data[ 11 ]
 
 # (5) Pick how much to invest in single order and how much one order costs in fees
-#amount = 10000
-#fee = 5
+amount = 10000
+fee = 5
+trade_rolling_average( test_data, 20, amount, fee, True )
 #max_value = optimize_rolling_length( data, amount, fee )
