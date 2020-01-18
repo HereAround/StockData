@@ -66,7 +66,7 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
         print( 'Shares: ', str( shares ) )
         print( 'Money: ', str( money ) )
         print( 'Total value: ', str( data['Open'][ length - 1 ] * shares + money ) )
-        print( 'Increase of value: ' + str( 100 * ( data['Open'][ length - 1 ] * shares + money ) / amount ) + '%' )
+        print( 'Increase of value: ' + str( 100 * ( data['Open'][ length - 1 ] * shares + money ) / amount - 100 ) + '%' )
         print( '\n' )
         print( 'Final difference: ' + str( data['Difference'][ length - 1 ] ) )
         if data['Difference'][ length - 1 ] > 0:
