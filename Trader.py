@@ -46,6 +46,7 @@ def trade_rolling_average( data, roll_length, amount, fee, stopLoss, display ):
                     shares = ( cash - fee ) / data[ i ]
                     cash = 0
                     invested = True
+                    original_value = shares * data[ i ]
                     trades = trades + 1
                     if display:
                         print( "Buy:" )
