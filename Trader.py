@@ -36,45 +36,55 @@ def trade_rolling_average( data, roll_length, amount, fee, stopLoss, display ):
         
         # Wait at least 10 days
         # But in any case long enough to have finite values for the differences (can identify tendency)
-        if i > 10 and not math.isnan( difference[ i - 2 ] ) and not math.isnan( difference[ i ] ):
+        if i >= 2 and not math.isnan( difference[ i - 2 ] ) and not math.isnan( difference[ i ] ):
             
             # check if we should act
             if np.sign( difference[i-2] ) != np.sign( difference[i] ):
 
-                if difference[i] > 0 and invested == False and cash > fee:
-                    # -> Buy!
-                    shares = ( cash - fee ) / data[ i ]
-                    cash = 0
-                    invested = True
-                    original_value = shares * data[ i ]
-                    trades = trades + 1
-                    if display:
-                        print( "Buy:" )
-                        print( "Value: " + str( data[ i ] ) )
-                        print( "Difference: " + str( difference[i ] ) )
-                        print( "Tendency: " + str( difference[ i ] - difference[ i - 2 ] ) )
-                        print( "(Money,Shares) = [" + str( cash ) + ", " + str( shares ) + " ]" )
-                        print( "Total value: " + str( cash + shares * data[ i ] ) + " \n" )
+                if invested == False and cash > fee:
+                    
+                    if difference[i] > 0:
+                        # -> Buy!
+                        shares = ( cash - fee ) / data[ i ]
+                        cash = 0
+                        invested = True
+                        original_value = shares * data[ i ]
+                        trades = trades + 1
+                        if display:
+                            print( "Buy:" )
+                            print( "Value: " + str( data[ i ] ) )
+                            print( "Difference: " + str( difference[i ] ) )
+                            print( "Tendency: " + str( difference[ i ] - difference[ i - 2 ] ) )
+                            print( "(Money,Shares) = [" + str( cash ) + ", " + str( shares ) + " ]" )
+                            print( str( stopLoss * original_value ) )
+                            print( str( original_value ) )
+                            print( "Total value: " + str( cash + shares * data[ i ] ) + " \n" )
             
-                if (difference[i] < 0 or original_value - data[i] > stopLoss * original_value) and invested == True and shares * data[ i ] - fee > 0:
-                    # -> Sell!
-                    cash = shares * data[ i ] - fee
-                    shares = 0
-                    invested = False
-                    trades = trades + 1
-                    if display:
-                        print( "Sell:" )
-                        print( "Value: " + str( data[ i ] ) )
-                        print( "Difference: " + str( difference[i ] ) )
-                        print( "Tendency: " + str( difference[ i ] - difference[ i - 2 ] ) )
-                        print( "(Money,Shares) = [" + str( cash ) + ", " + str( shares ) + " ]" )
-                        print( "Total value: " + str( cash + shares * data[ i ] ) + " \n" )
+                if invested == True and shares * data[ i ] - fee > 0:
+
+                    if ( difference[i] < 0 ) or ( original_value - shares * data[i] > stopLoss * original_value ):
+                        # -> Sell!
+                        cash = shares * data[ i ] - fee
+                        shares = 0
+                        invested = False
+                        trades = trades + 1
+                        if display:
+                            if difference[i] < 0:
+                                print( "Ordinary sell:" )
+                            if original_value - shares * data[i] > stopLoss * original_value:
+                                print( "Stop-Loss triggered sell:" )
+                            print( "Value: " + str( data[ i ] ) )
+                            print( "Difference: " + str( difference[i ] ) )
+                            print( "Tendency: " + str( difference[ i ] - difference[ i - 2 ] ) )
+                            print( "(Money,Shares) = [" + str( cash ) + ", " + str( shares ) + " ]" )
+                            print( "Total value: " + str( cash + shares * data[ i ] ) + " \n" )
         
         # check if the trader is very bad and bancrupt
         if cash + shares * data[ i ] < fee and not bancrupt:
             bancrupt = True
             print( "Trader bancrupt" )
 
+        # update the current value that the trader obtained in shares
         value.append( ( cash + shares * data[ i ] ) / amount * max_share_price )
     
     if display:
