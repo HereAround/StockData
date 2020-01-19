@@ -19,8 +19,8 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
     cash = amount
     shares = 0
     invested = False
-    bancrupt = False
     trades = 0
+    bancrupt = False
     value = [ ]
     max_share_price = data.max()
     
@@ -35,7 +35,7 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
         
         # Wait at least 10 days
         # But in any case long enough to have finite values for the differences (can identify tendency)
-        if i > 10 and not math.isnan( difference[ i - 2 ] ) and not math.isnan( difference[ i ] ) and not bancrupt:
+        if i > 10 and not math.isnan( difference[ i - 2 ] ) and not math.isnan( difference[ i ] ):
             
             # check if we should act
             if np.sign( difference[i-2] ) != np.sign( difference[i] ):
@@ -69,9 +69,7 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
                         print( "Total value: " + str( cash + shares * data[ i ] ) + " \n" )
         
         # check if the trader is very bad and bancrupt
-        if cash + shares * data[ i ] < 0:
-            cash = 0
-            shares = 0
+        if cash + shares * data[ i ] < fee and not bancrupt:
             bancrupt = True
             print( "Trader bancrupt" )
 
