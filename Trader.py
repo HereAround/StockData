@@ -9,7 +9,7 @@ register_matplotlib_converters()
 
 
 # (2) Trade by rolling average
-def trade_rolling_average( data, roll_length, amount, fee, display ):
+def trade_rolling_average( data, roll_length, amount, fee, stopLoss, display ):
 
     # 2.1 prepare data for trading
     rolling_mean = data.rolling(window=roll_length,min_periods=0).mean()
@@ -23,6 +23,7 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
     bancrupt = False
     value = [ ]
     max_share_price = data.max()
+    original_value = amount
     
     # 2.3 Trade:
     # (1) Wait for good moment for investment
@@ -54,7 +55,7 @@ def trade_rolling_average( data, roll_length, amount, fee, display ):
                         print( "(Money,Shares) = [" + str( cash ) + ", " + str( shares ) + " ]" )
                         print( "Total value: " + str( cash + shares * data[ i ] ) + " \n" )
             
-                if difference[i] < 0 and invested == True and shares * data[ i ] - fee > 0:
+                if (difference[i] < 0 or original_value - data[i] > stopLoss * original_value) and invested == True and shares * data[ i ] - fee > 0:
                     # -> Sell!
                     cash = shares * data[ i ] - fee
                     shares = 0

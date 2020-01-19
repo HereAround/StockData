@@ -24,5 +24,6 @@ test_data = data[ 11 ]
 # (5) Pick how much to invest in single order and how much one order costs in fees
 amount = 10000
 fee = 5
-trade_rolling_average( test_data, 20, amount, fee, True )
+stopLoss = 0.1
+trade_rolling_average( test_data, 20, amount, fee, stopLoss, True )
 #max_value = optimize_rolling_length( data, amount, fee )
